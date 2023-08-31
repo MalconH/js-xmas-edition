@@ -56,6 +56,7 @@ function probarCalcularSalarioMensual() {
     console.assert(calcularSalarioMensual(0) === 0,
         "calcularSalarioMensual no funcionó correctamente con un sueldo anual de 0");
 }
+""
 
 probarCalcularSalarioMensual();
 probarValidarCiudad();
