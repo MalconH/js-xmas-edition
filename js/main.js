@@ -55,14 +55,25 @@ function validarFormulario(event) {
         "descripcion-regalo": errorDescripcionRegalo
     };
 
-    manejarErrores(errores);
+    const esExito = manejarErrores(errores) === 0;
+
+    if (esExito) {
+        $form.className = "oculto";
+        document.querySelector("#exito").className = "";
+        setTimeout(redirigirUsuario, 5000);
+    }
 
     event.preventDefault();
+}
+
+function redirigirUsuario() {
+    window.location.href = "wishlist.html";
 }
 
 function manejarErrores(errores) {
     const keys = Object.keys(errores);
     const $errores = document.querySelector("#errores");
+    let contadorErrores = 0;
 
     borrarErrores();
 
@@ -72,33 +83,15 @@ function manejarErrores(errores) {
 
         if (error) {
             agregarError(error);
+            contadorErrores++;
+
             $form[key].className = "error";
         } else {
             $form[key].className = "";
         }
     });
 
-    // const errorNombre = errores.nombre;
-    // const errorCiudad = errores.ciudad;
-    // const errorDescripcionRegalo = errores.descripcionRegalo;
-
-    // if (errorNombre) {
-    //     $form.nombre.className = "error";
-    // } else {
-    //     $form.nombre.className = "";
-    // }
-
-    // if (errorCiudad) {
-    //     $form.ciudad.className = "error";
-    // } else {
-    //     $form.ciudad.className = "";
-    // }
-
-    // if (errorDescripcionRegalo) {
-    //     $form["descripcion-regalo"].className = "error";
-    // } else {
-    //     $form["descripcion-regalo"].className = "";
-    // }
+    return contadorErrores;
 }
 
 function agregarError(error) {
